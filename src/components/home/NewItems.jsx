@@ -13,17 +13,18 @@ const NewItems = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-   fetchNewItems()
+    fetchNewItems()
   }, []);
 
   async function fetchNewItems() {
     try {
       const response = await axios.get("https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems")
-         setItems(response.data);
-          setLoading(false);
-    } catch(error) {
-        console.error("Error fetching data: ", error);
-        setLoading(false);
+      setItems(response.data);
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+    } finally {
+      setLoading(false);
+
     }
   }
 

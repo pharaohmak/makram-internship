@@ -6,7 +6,7 @@ import { ShimmerDiv, ShimmerText, ShimmerTitle } from "shimmer-effects-react";
 
 const TopSellers = () => {
   const [topSellers, setTopSellers] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchTopSellers();
@@ -16,10 +16,9 @@ const TopSellers = () => {
     try {
       const response = await axios.get("https://us-central1-nft-cloud-functions.cloudfunctions.net/topSellers")
       setTopSellers(response.data);
-      console.log(topSellers)
-      setLoading(false);
     } catch (error) {
       console.error("Counld not fetch data" + error);
+    } finally {
       setLoading(false)
     }
   }

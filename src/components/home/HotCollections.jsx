@@ -13,19 +13,19 @@ const HotCollections = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios
-      .get(
-        "https://us-central1-nft-cloud-functions.cloudfunctions.net/hotCollections"
-      )
-      .then((response) => {
-        setCollection(response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching data: ", error);
-        setLoading(false);
-      });
+   fetchHotCollections()
   }, [])
+
+  async function fetchHotCollections() {
+    try {
+      const response = await axios.get("https://us-central1-nft-cloud-functions.cloudfunctions.net/hotCollections")
+      setCollection(response.data)
+    } catch(error) {
+      console.error("Error fetching data: ", error)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   const options = {
     loop: true,
@@ -109,7 +109,8 @@ const HotCollections = () => {
               {collection.map((data,index) => (
                 <div className="item" key={index}>
                   <div className="nft_coll">
-                    <div className="nft_wrap" style={{ height: '100%' }}>                        <Link to={`/item-details/${collection.id}`}>
+                    <div className="nft_wrap" style={{ height: '100%' }}>                        
+                      <Link to={`/item-details/${collection.id}`}>
                       <img
                         src={data.nftImage}
                         className="lazy img-fluid"
