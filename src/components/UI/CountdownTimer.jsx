@@ -12,11 +12,7 @@ const CountdownTimer = ({ expiryDate }) => {
         seconds: Math.floor((difference / 1000) % 60),
       };
     } else {
-      timeLeft = {
-        hours: 0,
-        minutes: 0,
-        seconds: 0,
-      };
+      timeLeft = null;
     }
     return timeLeft;
   };
@@ -25,16 +21,29 @@ const CountdownTimer = ({ expiryDate }) => {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setTimeLeft(calculateTimeLeft());
+      const updatedTimeLeft = calculateTimeLeft();
+      setTimeLeft(updatedTimeLeft);
+
+      if (!updatedTimeLeft) {
+        clearInterval(timer);
+      }
     }, 1000);
+    
     return () => clearInterval(timer);
   }, [expiryDate]);
 
   return (
     <div id="timer" style={{ display: 'flex', gap: '0.5rem' }} aria-live="polite">
-      <span className="timer__hours">{timeLeft.hours.toString().padStart(2, "0")}h</span>
-      <span className="timer__minutes">{timeLeft.minutes.toString().padStart(2, "0")}m</span>
-      <span className="timer__seconds">{timeLeft.seconds.toString().padStart(2, "0")}s</span>
+      {timeLeft ? (
+        <>
+          <span className="timer__hours">{timeLeft.hours.toString().padStart(1, "0")}h</span>
+          <span className="timer__minutes">{timeLeft.minutes.toString().padStart(2, "0")}m</span>
+          <span className="timer__seconds">{timeLeft.seconds.toString().padStart(2, "0")}s</span>
+        </>
+      ) : (
+        <span className="timer__expired">EXPIRED</span>
+
+      )}
     </div>
   );
 };
