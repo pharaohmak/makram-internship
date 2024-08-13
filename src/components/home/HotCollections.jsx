@@ -13,19 +13,19 @@ const HotCollections = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios
-      .get(
-        "https://us-central1-nft-cloud-functions.cloudfunctions.net/hotCollections"
-      )
-      .then((response) => {
-        setCollection(response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching data: ", error);
-        setLoading(false);
-      });
+    fetchHotCollections()
   }, [])
+
+  async function fetchHotCollections() {
+    try {
+      const response = await axios.get("https://us-central1-nft-cloud-functions.cloudfunctions.net/hotCollections");
+      setCollection(response.data);
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   const options = {
     loop: true,
@@ -70,7 +70,6 @@ const HotCollections = () => {
                 <div className="nft_coll">
                   <div className="nft_wrap">
                     <ShimmerDiv
-                      className="lazy img-fluid"
                       mode="light"
                       height={"100%"}
                       width={"100%"}
@@ -78,7 +77,6 @@ const HotCollections = () => {
                   </div>
                   <div className="nft_coll_pp">
                     <ShimmerDiv
-                      className="lazy pp-coll"
                       mode="light"
                       center={true}
                       height={50}
@@ -106,16 +104,17 @@ const HotCollections = () => {
             ))
           ) : (
             <OwlCarousel {...options}>
-              {collection.map((data,index) => (
+              {collection.map((data, index) => (
                 <div className="item" key={index}>
                   <div className="nft_coll">
-                    <div className="nft_wrap" style={{ height: '100%' }}>                        <Link to={`/item-details/${collection.id}`}>
-                      <img
-                        src={data.nftImage}
-                        className="lazy img-fluid"
-                        alt={data.title}
-                      />
-                    </Link>
+                    <div className="nft_wrap" style={{ height: '100%' }}>
+                      <Link to={`/item-details/${collection.id}`}>
+                        <img
+                          src={data.nftImage}
+                          className="lazy img-fluid"
+                          alt={data.title}
+                        />
+                      </Link>
                     </div>
                     <div className="nft_coll_pp">
                       <Link to={`/author/${data.authorId}`}>
