@@ -13,17 +13,17 @@ const NewItems = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-   fetchNewItems()
+    fetchNewItems()
   }, []);
 
   async function fetchNewItems() {
     try {
       const response = await axios.get("https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems")
-         setItems(response.data);
-          setLoading(false);
-    } catch(error) {
-        console.error("Error fetching data: ", error);
-        setLoading(false);
+      setItems(response.data);
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -66,43 +66,31 @@ const NewItems = () => {
                 key={index}
               >
                 <div className="nft__item">
-                  <div className="author_list_pp">
-                    <div>
-                      <ShimmerDiv
-                        mode="light"
-                        center={true}
-                        height={50}
-                        width={50}
-                        rounded={50}
-                      />
-                    </div>
+                  <div className="nft__author--img">
+                    <ShimmerDiv
+                      mode="light"
+                      center={true}
+                      height={50}
+                      width={50}
+                      rounded={50}
+                    />
                   </div>
                   <div className="nft__item_wrap">
                     <ShimmerDiv
                       className="nft-wrap--img"
                       mode="light"
-                      height={"100%"}
+                      height={"90%"}
                       width={"100%"}
                       center={true}
                     />
                   </div>
                   <div className="nft__item_info">
-                    <div className="skeleton skeleton-text">
-                      <ShimmerText
-                        mode="light"
-                        center={true}
-                        width={100}
-                        line={1}
-                      />
-                    </div>
-                    <div className="skeleton skeleton-text">
-                      <ShimmerText
-                        mode="light"
-                        center={true}
-                        width={100}
-                        line={1}
-                      />
-                    </div>
+                    <ShimmerText
+                      mode="light"
+                      center={true}
+                      width={100}
+                      line={1}
+                    />
                   </div>
                 </div>
               </div>
