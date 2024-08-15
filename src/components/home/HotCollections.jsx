@@ -6,24 +6,24 @@ import axios from "axios";
 import OwlCarousel from 'react-owl-carousel';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
-import { ShimmerDiv, ShimmerText, ShimmerTitle } from "shimmer-effects-react";
+import Skeleton from '../UI/Skeleton'
 
 const HotCollections = () => {
   const [collection, setCollection] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-   fetchHotCollections()
+    fetchHotCollections()
   }, [])
 
   async function fetchHotCollections() {
     try {
-      const response = await axios.get("https://us-central1-nft-cloud-functions.cloudfunctions.net/hotCollections")
-      setCollection(response.data)
-    } catch(error) {
-      console.error("Error fetching data: ", error)
+      const response = await axios.get("https://us-central1-nft-cloud-functions.cloudfunctions.net/hotCollections");
+      setCollection(response.data);
+    } catch (error) {
+      console.error("Error fetching data: ", error);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   }
 
@@ -69,67 +69,45 @@ const HotCollections = () => {
               <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12" key={index}>
                 <div className="nft_coll">
                   <div className="nft_wrap">
-                    <ShimmerDiv
-                      className="lazy img-fluid"
-                      mode="light"
-                      height={"100%"}
-                      width={"100%"}
-                    />
+                    <Skeleton height={200} width={"100%"}/>
                   </div>
                   <div className="nft_coll_pp">
-                    <ShimmerDiv
-                      className="lazy pp-coll"
-                      mode="light"
-                      center={true}
-                      height={50}
-                      width={50}
-                      rounded={50}
-                    />
+                  <Skeleton height={50} width={50} borderRadius={100}/>
                     <i className="fa fa-check"></i>
                   </div>
                   <div className="nft_coll_info">
-                    <ShimmerTitle
-                      mode="light"
-                      center={true}
-                      width={60}
-                      line={1}
-                    />
-                    <ShimmerText
-                      mode="light"
-                      center={true}
-                      width={40}
-                      line={1}
-                    />
+                    <Skeleton height={20} width={100}/>
                   </div>
+                   <Skeleton height={20} width={60}/>
                 </div>
               </div>
             ))
           ) : (
             <OwlCarousel {...options}>
-              {collection.map((data,index) => (
+              {collection.map((data, index) => (
                 <div className="item" key={index}>
                   <div className="nft_coll">
-                    <div className="nft_wrap" style={{ height: '100%' }}>                        
-                      <Link to={`/item-details/${collection.id}`}>
-                      <img
-                        src={data.nftImage}
-                        className="lazy img-fluid"
-                        alt={data.title}
-                      />
-                    </Link>
+                    <div className="nft_wrap" style={{ height: '100%' }}>
+                      <Link to={`/item-details/${data.nftId}`}>
+                        <img
+                          src={data.nftImage || nftImage}
+                          className="lazy img-fluid"
+                          alt={data.title}
+                        />
+                      </Link>
                     </div>
                     <div className="nft_coll_pp">
                       <Link to={`/author/${data.authorId}`}>
                         <img
                           className="lazy pp-coll"
-                          src={data.authorImage}
+                          src={data.authorImage || AuthorImage}
                           alt={data.authorName}
                         />
                       </Link>
                       <i className="fa fa-check"></i>
                     </div>
                     <div className="nft_coll_info">
-                      <Link to={`/explore/${data.id}`}>
+                      <Link to="/explore">
                         <h4>{data.title}</h4>
                       </Link>
                       <span>ERC-{data.code}</span>

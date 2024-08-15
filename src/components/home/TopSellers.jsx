@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import AuthorImage from "../../images/author_thumbnail.jpg";
 import axios from "axios";
 import { ShimmerDiv, ShimmerText, ShimmerTitle } from "shimmer-effects-react";
+import Skeleton from "../UI/Skeleton";
 
 const TopSellers = () => {
   const [topSellers, setTopSellers] = useState([]);
@@ -38,34 +39,17 @@ const TopSellers = () => {
               {loading ? (
                 new Array(12).fill(0).map((_, index) => (
                   <li key={index}>
-                    <div className="author_list_pp">
-                      <Link to="/author">
-                        <ShimmerDiv
-                          className="lazy pp-coll"
-                          mode="light"
-                          center={true}
-                          height={50}
-                          width={50}
-                          rounded={50}
-                        />
-                        <i className="fa fa-check"></i>
-                      </Link>
-                    </div>
-                    <div className="author_list_info">
-                      <ShimmerTitle
-                        mode="light"
-                        center={true}
-                        width={60}
-                        line={1}
-                      />
-                      <ShimmerText
-                        mode="light"
-                        center={true}
-                        width={40}
-                        line={1}
-                      />
-                    </div>
-                  </li>
+                  <div className="author_list_pp">
+                    <Link to="/author">
+                      <Skeleton width={50} height={50} borderRadius={100}/>
+                      <i className="fa fa-check"></i>
+                    </Link>
+                  </div>
+                  <div className="author_list_info">
+                    <Link to="/author"><Skeleton width={100} height={20}/></Link>
+                    <span><Skeleton width={40} height={20} /></span>
+                  </div>
+                </li>
                 ))
               ) : (
                 topSellers.map((data, index) => (
