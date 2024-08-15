@@ -5,8 +5,8 @@ import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import "../../css/styles/owl.carousel.css";
-import { ShimmerDiv, ShimmerText } from "shimmer-effects-react";
 import CountdownTimer from "../UI/CountdownTimer";
+import Skeleton from "../UI/Skeleton";
 
 const NewItems = () => {
   const [items, setItems] = useState([]);
@@ -61,36 +61,26 @@ const NewItems = () => {
           </div>
           {loading ? (
             new Array(4).fill(0).map((_, index) => (
-              <div
-                className="col-lg-3 col-md-6 col-sm-6 col-xs-12"
-                key={index}
-              >
+              <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12" key={index}>
                 <div className="nft__item">
-                  <div className="nft__author--img">
-                    <ShimmerDiv
-                      mode="light"
-                      center={true}
-                      height={50}
-                      width={50}
-                      rounded={50}
-                    />
+                  <div className="author_list_pp">
+                    <Skeleton height={50} width={50} borderRadius={100} />
+                    <i className="fa fa-check"></i>
                   </div>
                   <div className="nft__item_wrap">
-                    <ShimmerDiv
-                      className="nft-wrap--img"
-                      mode="light"
-                      height={"90%"}
-                      width={"100%"}
-                      center={true}
-                    />
+                  <Link to="/item-details">
+                    <Skeleton height={350} width={"100%"} />
+                  </Link>
                   </div>
-                  <div className="nft__item_info">
-                    <ShimmerText
-                      mode="light"
-                      center={true}
-                      width={100}
-                      line={1}
-                    />
+                  <div className="skeleton__box">
+
+                    <div className="nft__item_info">
+                      <h4><Skeleton height={20} width={180} /></h4>
+                      <div className="nft__item_price"><Skeleton height={20} width={100} /></div>
+                      <div className="nft__item_like">
+                        <Skeleton height={15} width={30} />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
