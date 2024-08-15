@@ -32,7 +32,6 @@ const Author = () => {
       console.error("Error fetching data:", error);
     } finally {
       setLoading(false);
-      console.log(author)
     }
   }
 
