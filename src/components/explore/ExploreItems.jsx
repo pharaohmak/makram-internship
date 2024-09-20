@@ -62,7 +62,7 @@ const ExploreItems = () => {
             className="d-item col-lg-3 col-md-6 col-sm-6 col-xs-12"
             style={{ display: "block", backgroundSize: "cover" }}
           >
-            <Skeleton height={400} width={"100%"} />
+
           </div>
         ))
       ) : (
@@ -82,9 +82,11 @@ const ExploreItems = () => {
               {item.expiryDate && (
                 <div className="de_countdown">
                   <CountdownTimer expiryDate={item.expiryDate} />
+
                 </div>
               )}
               <div className="nft__item_wrap">
+
                 <Link to={`/item-details/${item.nftId}`}>
                   <img src={item.nftImage || nftImage} className="lazy nft__item_preview" alt="" />
                 </Link>
