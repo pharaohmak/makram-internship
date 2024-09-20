@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import AuthorImage from "../../images/author_thumbnail.jpg";
 import axios from "axios";
-import { ShimmerDiv, ShimmerText, ShimmerTitle } from "shimmer-effects-react";
 import Skeleton from "../UI/Skeleton";
 
 const TopSellers = () => {
