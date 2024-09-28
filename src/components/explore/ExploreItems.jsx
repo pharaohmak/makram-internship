@@ -10,12 +10,14 @@ const ExploreItems = () => {
   const [exploreItems, setExploreItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("");
+  const [loadedItemsCount, setLoadedItemsCount] = useState(8); 
 
   useEffect(() => {
     fetchData(filter);
   }, [filter]);
 
   async function fetchData(filter = "") {
+    setLoading(true);
     try {
       let url = "https://us-central1-nft-cloud-functions.cloudfunctions.net/explore";
       if (filter) {
@@ -34,15 +36,8 @@ const ExploreItems = () => {
     setFilter(e.target.value);
   };
 
-  const handleLoadMore = async () => {
-    try {
-      const response = await axios.get(
-        "https://us-central1-nft-cloud-functions.cloudfunctions.net/explore"
-      );
-      setExploreItems([...exploreItems, ...response.data]);
-    } catch (error) {
-      console.error(error);
-    }
+  const handleLoadMore = () => {
+    setLoadedItemsCount((prevCount) => prevCount + 4); 
   };
 
   return (
@@ -56,17 +51,17 @@ const ExploreItems = () => {
         </select>
       </div>
       {loading ? (
-        new Array(8).fill(0).map((_, index) => (
+        new Array(4).fill(0).map((_, index) => (
           <div
             key={index}
             className="d-item col-lg-3 col-md-6 col-sm-6 col-xs-12"
             style={{ display: "block", backgroundSize: "cover" }}
           >
-             <Skeleton height={400} width={"100%"}/>
+            <Skeleton height={400} width={"100%"} />
           </div>
         ))
       ) : (
-        exploreItems.map((item, index) => (
+        exploreItems.slice(0, loadedItemsCount).map((item, index) => (
           <div
             key={index}
             className="d-item col-lg-3 col-md-6 col-sm-6 col-xs-12"
@@ -79,29 +74,16 @@ const ExploreItems = () => {
                   <i className="fa fa-check"></i>
                 </Link>
               </div>
-              {item.expiryDate && (
+              {item.expiryDate ? (
                 <div className="de_countdown">
                   <CountdownTimer expiryDate={item.expiryDate} />
                 </div>
+              ) : (
+                <div className="de_countdown">
+                  <span className="timer__expired">EXPIRED</span>
+                </div>
               )}
               <div className="nft__item_wrap">
-                <div className="nft__item_extra">
-                  <div className="nft__item_buttons">
-                    <button>Buy Now</button>
-                    <div className="nft__item_share">
-                      <h4>Share</h4>
-                      <a href={item.facebookLink} target="_blank" rel="noreferrer">
-                        <i className="fa fa-facebook fa-lg"></i>
-                      </a>
-                      <a href={item.twitterLink} target="_blank" rel="noreferrer">
-                        <i className="fa fa-twitter fa-lg"></i>
-                      </a>
-                      <a href={item.emailLink}>
-                        <i className="fa fa-envelope fa-lg"></i>
-                      </a>
-                    </div>
-                  </div>
-                </div>
                 <Link to={`/item-details/${item.nftId}`}>
                   <img src={item.nftImage || nftImage} className="lazy nft__item_preview" alt="" />
                 </Link>
@@ -121,9 +103,11 @@ const ExploreItems = () => {
         ))
       )}
       <div className="col-md-12 text-center">
-        <button onClick={handleLoadMore} className="btn-main lead">
-          Load more
-        </button>
+        {loadedItemsCount < exploreItems.length && ( 
+          <button onClick={handleLoadMore} className="btn-main lead">
+            Load more
+          </button>
+        )}
       </div>
     </>
   );
