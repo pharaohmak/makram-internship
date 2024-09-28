@@ -13,12 +13,12 @@ const NewItems = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchNewItems()
+    fetchNewItems();
   }, []);
 
   async function fetchNewItems() {
     try {
-      const response = await axios.get("https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems")
+      const response = await axios.get("https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems");
       setItems(response.data);
     } catch (error) {
       console.error("Error fetching data: ", error);
@@ -34,24 +34,32 @@ const NewItems = () => {
     dots: false,
     margin: 5,
     responsive: {
-      0: {
-        items: 1,
-      },
-      600: {
-        items: 2,
-      },
-      1000: {
-        items: 3,
-      },
-      1200: {
-        items: 4,
-      },
+      0: { items: 1 },
+      600: { items: 2 },
+      1000: { items: 3 },
+      1200: { items: 4 },
     },
   };
 
   return (
-    <section id="section-items" className="no-bottom">
-      <div className="container">
+    <section
+      id="section-items"
+      className="no-bottom"
+      data-aos="fade-right"
+      data-aos-easing="ease-in-back"
+      data-aos-delay="500"
+      data-aos-offset="0"
+      data-aos-duration="1200"
+      data-aos-anchor-placement="center-bottom"
+    >
+      <div
+        className="container"
+        data-aos="fade-right"
+        data-aos-easing="ease-in-back"
+        data-aos-delay="500"
+        data-aos-offset="0"
+        data-aos-duration="1600"
+      >
         <div className="row">
           <div className="col-lg-12">
             <div className="text-center">
@@ -68,12 +76,11 @@ const NewItems = () => {
                     <i className="fa fa-check"></i>
                   </div>
                   <div className="nft__item_wrap">
-                  <Link to="/item-details">
-                    <Skeleton height={350} width={"100%"} />
-                  </Link>
+                    <Link to="/item-details">
+                      <Skeleton height={350} width={"100%"} />
+                    </Link>
                   </div>
                   <div className="skeleton__box">
-
                     <div className="nft__item_info">
                       <h4><Skeleton height={20} width={180} /></h4>
                       <div className="nft__item_price"><Skeleton height={20} width={100} /></div>
@@ -89,8 +96,22 @@ const NewItems = () => {
             <OwlCarousel {...options}>
               {items.map((item, index) => (
                 <div className="item" key={index}>
-                  <div className="nft__item">
-                    <div className="author_list_pp">
+                  <div
+                    className="nft__item"
+                    data-aos="fade-right"
+                    data-aos-easing="ease-in-back"
+                    data-aos-delay="500"
+                    data-aos-offset="0"
+                    data-aos-duration="1600"
+                  >
+                    <div
+                      className="author_list_pp"
+                      data-aos="fade-right"
+                      data-aos-easing="ease-in-back"
+                      data-aos-delay="500"
+                      data-aos-offset="0"
+                      data-aos-duration="1200"
+                    >
                       <Link
                         to={`/author/${item.authorId}`}
                         data-bs-toggle="tooltip"
@@ -105,12 +126,23 @@ const NewItems = () => {
                         <i className="fa fa-check"></i>
                       </Link>
                     </div>
-                    {item.expiryDate && (
+                    {item.expiryDate ? (
                       <div className="de_countdown">
                         <CountdownTimer expiryDate={item.expiryDate} />
                       </div>
+                    ) : (
+                      <div className="de_countdown">
+                        <span className="timer__expired">EXPIRED</span>
+                      </div>
                     )}
-                    <div className="nft__item_wrap">
+                    <div
+                      className="nft__item_wrap"
+                      data-aos="fade-right"
+                      data-aos-easing="ease-in-back"
+                      data-aos-delay="400"
+                      data-aos-offset="0"
+                      data-aos-duration="1400"
+                    >
                       <Link to={`/item-details/${item.nftId}`}>
                         <img
                           src={item.nftImage}
@@ -119,7 +151,14 @@ const NewItems = () => {
                         />
                       </Link>
                     </div>
-                    <div className="nft__item_info">
+                    <div
+                      className="nft__item_info"
+                      data-aos="fade-right"
+                      data-aos-easing="ease-in-back"
+                      data-aos-delay="400"
+                      data-aos-offset="0"
+                      data-aos-duration="1600"
+                    >
                       <Link to={`/item-details/${item.nftId}`}>
                         <h4>{item.title}</h4>
                       </Link>

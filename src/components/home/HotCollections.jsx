@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import AuthorImage from "../../images/author_thumbnail.jpg";
@@ -55,7 +56,13 @@ const HotCollections = () => {
   };
 
   return (
-    <section id="section-collections" className="no-bottom">
+    <section id="section-collections" className="no-bottom"
+      data-aos="fade-in--down"
+      data-aos-easing="ease-in-back"
+      data-aos-delay="300"
+      data-aos-offset="0"
+      data-aos-duration="900"
+      data-aos-anchor-placement="center-bottom">
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
@@ -69,16 +76,16 @@ const HotCollections = () => {
               <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12" key={index}>
                 <div className="nft_coll">
                   <div className="nft_wrap">
-                    <Skeleton height={200} width={"100%"}/>
+                    <Skeleton height={200} width={"100%"} />
                   </div>
                   <div className="nft_coll_pp">
-                  <Skeleton height={50} width={50} borderRadius={100}/>
+                    <Skeleton height={50} width={50} borderRadius={100} />
                     <i className="fa fa-check"></i>
                   </div>
                   <div className="nft_coll_info">
-                    <Skeleton height={20} width={100}/>
+                    <Skeleton height={20} width={100} />
                   </div>
-                   <Skeleton height={20} width={60}/>
+                  <Skeleton height={20} width={60} />
                 </div>
               </div>
             ))
@@ -86,8 +93,16 @@ const HotCollections = () => {
             <OwlCarousel {...options}>
               {collection.map((data, index) => (
                 <div className="item" key={index}>
-                  <div className="nft_coll">
-                    <div className="nft_wrap" style={{ height: '100%' }}>
+                  <div className="nft_coll" data-aos="fade-left" data-aos-easing="ease-in-back"
+                    data-aos-delay="300"
+                    data-aos-offset="0"
+                    data-aos-duration="1600" >
+
+                    <div className="nft_wrap" style={{ height: '100%' }}
+                      data-aos="fade-left" data-aos-easing="ease-in-back"
+                      data-aos-delay="400"
+                      data-aos-offset="0"
+                      data-aos-duration="1600" >
                       <Link to={`/item-details/${data.nftId}`}>
                         <img
                           src={data.nftImage || nftImage}
@@ -96,7 +111,14 @@ const HotCollections = () => {
                         />
                       </Link>
                     </div>
-                    <div className="nft_coll_pp">
+                    <div className="nft_coll_pp"
+                      data-aos="fade-left"
+                      data-aos-easing="ease-in-back"
+                      data-aos-delay="500"
+                      data-aos-offset="0"
+                      data-aos-duration="1200"
+
+                    >
                       <Link to={`/author/${data.authorId}`}>
                         <img
                           className="lazy pp-coll"
@@ -106,7 +128,13 @@ const HotCollections = () => {
                       </Link>
                       <i className="fa fa-check"></i>
                     </div>
-                    <div className="nft_coll_info">
+                    <div className="nft_coll_info"
+                      data-aos="fade-left"
+                      data-aos-easing="ease-in-back"
+                      data-aos-delay="500"
+                      data-aos-offset="0"
+                      data-aos-duration="1200"
+                    >
                       <Link to="/explore">
                         <h4>{data.title}</h4>
                       </Link>
